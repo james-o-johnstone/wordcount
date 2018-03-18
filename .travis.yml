@@ -9,10 +9,10 @@
 # named .travis.yml
 
 # Use new container infrastructure to enable caching
-sudo: false
+sudo: true 
 
 # Do not choose a language; we provide our own build tools.
-language: generic
+language: haskell 
 
 # Caching so the next build will be fast too.
 cache:
@@ -20,29 +20,43 @@ cache:
   - $HOME/.ghc
   - $HOME/.cabal
   - $HOME/.stack
+  - $HOME/build/james-o-johnstone/wordcount/.stack-work
 
 # Ensure necessary system libraries are present
 addons:
   apt:
+    sources:
+      - sourceline 'ppa:hvr/ghc' # PPA of haskell packages
     packages:
-      - libgmp-dev
+      - libgmp-dev # required by cabal
+      - cabal-install-2.0 # required by GHC 8.x
+
+ghc:
+  - 8.0
 
 before_install:
 # Download and unpack the stack executable
 - mkdir -p ~/.local/bin
 - export PATH=$HOME/.local/bin:$PATH
 - travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
+- stack --version
 
 install:
-# Build dependencies
-- stack --no-terminal --install-ghc test --only-dependencies
-- cabal install
+  # Prepare Haskell environment for project
+  - travis_wait 30 stack setup --no-terminal
+  ## Check/show internal GHC
+  - stack ghc -- --version
+
+  # Build all project dependencies
+  - travis_wait 40 stack build --only-dependencies --no-terminal
+  
+  # Build project itself
+  ## Compile project with tests (`--test`) and benchmarks (`--bench`), but does not run executable (`--no-run-tests`, `--no-run-benchmarks`).
+  - travis_wait 40 stack build --test --bench --no-run-tests --no-run-benchmarks --no-terminal
 
 script:
-# Build the package, its tests, and its docs and run the tests
-- cabal configure --enable-tests
-- cabal build
-- cabal test --show-details=always
+  # Run tests
+  - travis_wait 40 stack build --test --no-terminal
 
 notifications:
   email: false
