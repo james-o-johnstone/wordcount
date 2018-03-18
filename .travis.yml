@@ -10,3 +10,6 @@ cache:
   - $HOME/.cabal
   - $HOME/.stack
   - $HOME/build/james-o-johnstone/wordcount/.stack-work
+
+notifications:
+  email: false
