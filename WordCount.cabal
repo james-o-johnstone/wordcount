@@ -1,0 +1,64 @@
+-- This file has been generated from package.yaml by hpack version 0.20.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 5db2c7a925ab8cb736b3de5e07fdf226451a06d39e593a8df597d5638efe2e9b
+
+name:           WordCount
+version:        0.1.0.0
+description:    Please see the README on Github at <https://github.com/value/WordCount#readme>
+homepage:       https://github.com/value/WordCount#readme
+bug-reports:    https://github.com/value/WordCount/issues
+author:         James
+maintainer:     value
+copyright:      value
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+cabal-version:  >= 1.10
+
+extra-source-files:
+    ChangeLog.md
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/value/WordCount
+
+library
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+  exposed-modules:
+      Lib
+    , WordCount
+  other-modules:
+      Paths_WordCount
+  default-language: Haskell2010
+
+executable WordCount-exe
+  main-is: Main.hs
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      WordCount
+    , base >=4.7 && <5
+  other-modules:
+      Paths_WordCount
+  default-language: Haskell2010
+
+test-suite WordCount-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      WordCount
+    , base >=4.7 && <5
+    , hspec >= 2.2
+  other-modules:
+      Paths_WordCount
+  default-language: Haskell2010
