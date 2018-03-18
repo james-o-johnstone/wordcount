@@ -17,6 +17,8 @@ language: generic
 # Caching so the next build will be fast too.
 cache:
   directories:
+  - $HOME/.ghc
+  - $HOME/.cabal
   - $HOME/.stack
 
 # Ensure necessary system libraries are present
@@ -37,4 +39,9 @@ install:
 
 script:
 # Build the package, its tests, and its docs and run the tests
-- stack --no-terminal test --haddock --no-haddock-deps
+- cabal configure --enable-tests
+- cabal build
+- cabal test --show-details=always
+
+notifications:
+  email: false
