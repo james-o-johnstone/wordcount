@@ -1,0 +1,4 @@
+.stack-work/
+WordCount.cabal
+*~
+.DS_Store
