@@ -47,6 +47,8 @@ install:
   ## Check/show internal GHC
   - stack ghc -- --version
 
+  - cabal install hspec
+
   # Build all project dependencies
   - travis_wait 40 stack build --only-dependencies --no-terminal
   
