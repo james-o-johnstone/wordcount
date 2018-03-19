@@ -1,4 +1,6 @@
-# WordCount
+# WordCount 
+[![Build Status](https://travis-ci.org/james-o-johnstone/wordcount.svg?branch=master)](https://travis-ci.org/james-o-johnstone/wordcount)
+
 Given an input string, generates the following statistics:
 - Number of lines
 - Number of empty lines
